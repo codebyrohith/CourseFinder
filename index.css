@@ -8,7 +8,6 @@ body {
   height: 100vh;
   position: relative;
   color: whitesmoke;
-
 }
 
 body::before {
@@ -32,11 +31,40 @@ h2 {
 }
 main {
   margin: 0 auto;
-  max-width: 50%;
+  max-width: 1300px;
 }
-form {
+.choosing {
+  text-align: center;
+  margin: 20px;
+}
+.domains {
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+}
+.domains select {
+  width: 350px;
+  font-size: 0.8em;
+  background-color: black;
+  color: whitesmoke;
+  padding: 0.5em;
+  border-radius: 3px;
+  border-style:ridge;
+}
+table {
+  width: 100%;
+  border:1px solid whitesmoke;
+}
+th {
+  border: 1px solid whitesmoke;
+}
+td {
+  border: 1px solid whitesmoke;
+
+}
+table,th,td {
   text-align: center;
 }
-select .font-color {
+/* select .font-color {
   color: black;
-}
+} */
