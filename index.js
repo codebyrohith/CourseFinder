@@ -1,48 +1,62 @@
-// script.js
-
-// Function to fetch data from the API and populate the dropdown
-async function populateDynamicDropdown() {
-    const dropdown = document.getElementById("dynamicDropdown");
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.getElementById('dropdown');
   
-    try {
-      // Make an API call to get data (replace 'your-api-endpoint' with the actual API endpoint)
-      const response = await fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/categories',{
+    // Fetch data from AWS API Gateway with a readable stream
+    fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/categories',
+    {
         method: 'GET',
-        mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Allow-Methods':'GET'
         },
+      }
+    )
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+  
+        // Get a readable stream reader
+        const reader = response.body.getReader();
+  
+        // Read stream asynchronously
+        return readStream(reader);
+      })
+      .catch(error => {
+        console.error('API Error:', error);
       });
-      
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
   
-      // Parse the JSON response
-      const data = await response.json();
+    function readStream(reader) {
+      return reader.read().then(({ done, value }) => {
+        if (done) {
+          console.log('Stream is done.');
+          return;
+        }
   
-      // Loop through the data and create dropdown options
-      for (const option of data) {
-        const optionElement = document.createElement("option");
-        optionElement.value = option;
-        optionElement.text = option;
-        dropdown.add(optionElement);
-      }
+        try {
+          // Parse the value (assuming it's JSON)
+          const jsonString = new TextDecoder().decode(value);
+
+// Parse the string as JSON
+          const jsonObject = JSON.parse(jsonString);
+          const options = JSON.parse(jsonObject.body);
   
-    } catch (error) {
-      console.error(`An error occurred: ${error.message}`);
+          // Populate dropdown with options
+          options.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.label;
+            dropdown.appendChild(optionElement);
+          });
+  
+          // Continue reading the next chunk of the stream
+          return readStream(reader);
+        } catch (parseError) {
+          console.error('JSON Parse Error:', parseError);
+          // Handle the error or abort reading the stream
+        }
+      });
     }
-  }
-  
-  // Function to handle the onchange event for the dynamic dropdown
-  function handleDynamicDropdownChange() {
-    const dropdown = document.getElementById("dynamicDropdown");
-    const selectedOption = dropdown.value;
-  
-    // Update the display with the selected option
-    document.getElementById("selectedOption").innerText = "Selected Option: " + selectedOption;
-  }
-  
-  // Call the function to populate the dynamic dropdown during page load
-  populateDynamicDropdown();
+  });
   
