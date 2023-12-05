@@ -8,9 +8,10 @@ async function populateDynamicDropdown() {
       // Make an API call to get data (replace 'your-api-endpoint' with the actual API endpoint)
       const response = await fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/categories',{
         method: 'GET',
-        mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Allow-Methods':'GET'
         },
       });
       
