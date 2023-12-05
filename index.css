@@ -87,7 +87,39 @@ div.mytable > div > div {
   width: 20%;
   padding:1em;
 }
+.heading-row div {
+  border: 1px solid white
+}
 
 .rendering {
   border: 1px solid white;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  margin-right: 20px;
+
+}
+
+.pagination a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  background-color: #308ad4;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #0d78cf;
 }
