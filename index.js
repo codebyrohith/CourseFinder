@@ -6,7 +6,7 @@ async function populateDynamicDropdown() {
   
     try {
       // Make an API call to get data (replace 'your-api-endpoint' with the actual API endpoint)
-      const response = await fetch('https://ng9yb2ypsi.execute-api.us-east-1.amazonaws.com/dev/categories');
+      const response = await fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/categories');
       
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
