@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Parse the string as JSON
           const jsonObject = JSON.parse(jsonString);
-          const options = JSON.parse(jsonObject);
+          const options = JSON.parse(jsonObject.body);
   
           // Populate dropdown with options
           options.forEach(option => {
