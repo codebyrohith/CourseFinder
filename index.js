@@ -2,7 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdown = document.getElementById('dropdown');
   
     // Fetch data from AWS API Gateway with a readable stream
-    fetch('https://your-api-endpoint.com/path')
+    fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/categories',
+    {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Allow-Methods':'GET'
+        },
+      }
+    )
       .then(response => {
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
