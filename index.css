@@ -38,8 +38,9 @@ main {
   margin: 20px;
 }
 .domains {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   margin-top: 10px;
+  margin-bottom: 15px;
   display: flex;
 }
 .domains select {
@@ -57,14 +58,36 @@ table {
 }
 th {
   border: 1px solid whitesmoke;
+  padding: 10px 0;
+}
+table img {
+  width: 25px;
+  height: 25px;
 }
 td {
   border: 1px solid whitesmoke;
-
+  padding: 15px 0;
 }
 table,th,td {
   text-align: center;
 }
-/* select .font-color {
-  color: black;
-} */
+
+/*using divs to create table*/
+div.mytable {
+  display: table;
+  width: 100%;
+}
+
+div.mytable > div {
+  display: table-row;
+  width: 100%;
+}
+div.mytable > div > div {
+  display: table-cell;
+  width: 20%;
+  padding:1em;
+}
+
+.rendering {
+  border: 1px solid white;
+}
