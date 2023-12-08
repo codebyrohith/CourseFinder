@@ -25,11 +25,33 @@ async function loadCategories(){
 }
 //DON'T REMOVE ANY COMMENTED LINES TILL WE FINISH OUR PROJECT!!!
 handleDropDownMenu = (params) => {
-  // console.log("vivek", params);
+  console.log("vivek", params);
   //use fetch(URL, {method:"POST", body:{}})
+  getDataBasedOnCategory(params);
   //create another function which gets table value and change accordingly
 }
 
+async function getDataBasedOnCategory(category){
+  try {
+    var data = []
+        const response = await fetch('https://x21e74ohc3.execute-api.us-east-1.amazonaws.com/dev/data?category=IT%20%26%20Software');
+  
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+  
+        data = await response.json();
+        console.log("data", data);
+        // const option_var = document.getElementById('dropdownmenu');
+        // // const values = ["a", "b,", "c", "d"];
+        // // document.getElementById('dropdownmenu').options[0].text = dropdownOptions[0];
+        // dropdownOptions.forEach(opt=>{
+        //   dropdownmenu.add(new Option(opt, opt)); 
+        // })
+      } catch (error) {
+        console.error('API Error:', error);
+      }
+}
 
 window.onload = loadCategories
 
