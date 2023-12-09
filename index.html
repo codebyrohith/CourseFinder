@@ -26,32 +26,59 @@
 
  </div>
   <section class="rendering">
-    <table>
+    <!-- <div class="mytable">
+      <div class="heading-row">
+          <div>Title</div>
+          <div>Professor</div>
+          <div>Subscribers</div>
+          <div>Rating</div>
+          <div>Paid/Unpaid</div>
+          <div>Duration</div>
+      </div>   
+      <div id="row1">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+      </div>
+      <div id="row2">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+    </div>
+  </div>
+  <footer>
+    <ul class="pagination">
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <!-- Add more li elements for additional pages -->
+
+      <!-- Example of next and previous buttons -->
+      <!-- <li><a href="#">&laquo; Previous</a></li>
+      <li><a href="#">Next &raquo;</a></li>
+  </ul>
+  </footer> -->
+  <table id="data-table">
+    <thead>
       <tr>
+        <th>Id</th>
         <th>Title</th>
         <th>Professor</th>
         <th>Subscribers</th>
         <th>Rating</th>
-        <th>Paid/Unpaid</th>
+        <th>Is Paid</th>
         <th>Duration</th>
       </tr>
-      <tr>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-      </tr>
-      <tr>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-        <td>Gibberish</td>
-      </tr>
-    </table>
+    </thead>
+    <tbody>
+      <!-- Table body will be dynamically populated using JavaScript -->
+    </tbody>
+  </table>
+  <div id="pagination-wrapper"></div>
   </section>
 </main>
 <script src="index.js"></script>
