@@ -1,0 +1,76 @@
+import boto3
+from botocore.exceptions import ClientError
+import json
+from decimal import Decimal
+
+aws_region = 'us-east-1'
+dynamodb_table = 'course_info'
+
+dynamodb = boto3.resource('dynamodb', region_name=aws_region)
+table = dynamodb.Table(dynamodb_table)
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Decimal):
+            return float(o)
+        return super(DecimalEncoder, self).default(o)
+
+def lambda_handler(event, context):
+    try:
+        # Extract parameters from the query string
+        category = event.get('queryStringParameters', {}).get('category')
+        page_size = int(event.get('queryStringParameters', {}).get('page_size', 10))
+        page_number = int(event.get('queryStringParameters', {}).get('page_number', 1))
+        sort_order = event.get('queryStringParameters', {}).get('sort_order', 'asc')
+
+        if not category:
+            return {
+                'statusCode': 400,
+                'body': 'Missing or invalid "category" parameter in the request.'
+            }
+
+        # Calculate the starting point for the next page
+        starting_index = (page_number - 1) * page_size
+
+        # Query DynamoDB for records based on the category
+        params = {
+            'FilterExpression': 'category = :category',
+            'ExpressionAttributeValues': {':category': category},
+            'Limit': page_size,
+        }
+
+        if sort_order.lower() == 'desc':
+            params['ScanFilter'] = {
+                'category': {
+                    'AttributeValueList': [category],
+                    'ComparisonOperator': 'EQ'
+                }
+            }
+
+        # Scan from the calculated starting index
+        response = table.scan(**params)
+
+        items = response.get('Items', [])
+
+        response_payload = {
+            'statusCode': 200,
+            'body': json.dumps(items, cls=DecimalEncoder),
+            'last_evaluated_key': response.get('LastEvaluatedKey'),
+            'count': len(items)
+        }
+
+        return response_payload
+
+    except ClientError as e:
+        # Handle DynamoDB errors
+        return {
+            'statusCode': 500,
+            'body': f"Error retrieving data from DynamoDB: {str(e)}"
+        }
+
+    except Exception as e:
+        # Handle other unexpected errors
+        return {
+            'statusCode': 500,
+            'body': f"An unexpected error occurred: {str(e)}"
+        }
